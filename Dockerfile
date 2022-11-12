@@ -9,6 +9,7 @@ RUN apt-get update \
         cmake \
         ffmpeg \
         git \
+        less \
         libsm6 \
         libxext6 \
     && rm -rf /var/lib/apt/lists/*
@@ -17,5 +18,4 @@ WORKDIR /root/nerfstudio
 
 ARG TCNN_CUDA_ARCHITECTURES=61
 RUN pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
-RUN pip install nerfstudio==0.1.9
-RUN pip install Pillow==9.3.0
+RUN pip install nerfstudio==0.1.9 Pillow==9.3.0

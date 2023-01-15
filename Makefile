@@ -12,5 +12,4 @@ shell: image
 		--gpus=all \
 		--network=host \
 		--volume=${REPO_PATH}:/root/nerfstudio \
-		--user="$(id -u):$(id -g)" \
 		${IMAGE_TAG} bash

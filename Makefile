@@ -1,16 +1,22 @@
 IMAGE_TAG:=pvphan/nerfstudio:0.1
-REPO_PATH=$(HOME)/git/nerfstudio
+REPO_PATH:=$(dir $(abspath $(firstword $(MAKEFILE_LIST))))
+RUN_FLAGS:=--rm \
+	--interactive \
+	--tty \
+	--gpus=all \
+	--network=host \
+	--volume=${REPO_PATH}:/root/nerfstudio \
+	--user="$(id -u):$(id -g)" \
 
-image:
-	docker build . --tag ${IMAGE_TAG}
+demo: image
+	docker run \
+		${RUN_FLAGS} \
+		${IMAGE_TAG} ./demo.sh
 
 shell: image
 	docker run \
-		--rm \
-		--interactive \
-		--tty \
-		--gpus=all \
-		--network=host \
-		--volume=${REPO_PATH}:/root/nerfstudio \
-		--user="$(id -u):$(id -g)" \
+		${RUN_FLAGS} \
 		${IMAGE_TAG} bash
+
+image:
+	docker build . --tag ${IMAGE_TAG}
